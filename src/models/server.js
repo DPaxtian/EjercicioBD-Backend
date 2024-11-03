@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const JWT = require('../middleware/jwt-token')
+const { swaggerUi, specifications } = require('../configuration/swagger-config')
 
 
 class Server {
@@ -9,6 +10,7 @@ class Server {
         this.port = process.env.PORT;
         this.middlewares();
         this.routes();
+        this.setupSwagger();
     }
 
     middlewares() {
@@ -26,6 +28,10 @@ class Server {
     routes() {
         this.app.use('/api/v1/animal', JWT.validateToken, require('../routes/animal-routes'));
         this.app.use('/api/v1/user', require('../routes/user-routes'))
+    }
+
+    setupSwagger(){
+        this.app.use('/api/v1/api-docs', swaggerUi.serve, swaggerUi.setup(specifications))
     }
 
     listen() {

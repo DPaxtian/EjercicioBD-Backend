@@ -12,7 +12,7 @@ const getAnimals = async (req, res) => {
         const resultGet = await AnimalLogic.getAnimals()
 
         if (resultGet.length === 0) {
-            resultCode = 200;
+            resultCode = 404;
             messageResponse = 'Animals not found :('
         } else {
             resultCode = 200;
