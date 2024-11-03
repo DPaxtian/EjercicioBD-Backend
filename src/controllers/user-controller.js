@@ -16,13 +16,13 @@ const login = async (req, res) => {
             token = JWT.signToken(user)
             statusCode = 200
             messageResponse = "Loged"
-        }
 
-        return res.header('access_token', token).json({
-            code: statusCode,
-            msg: messageResponse,
-            access_token: token
-        })
+            return res.header('access_token', token).json({
+                code: statusCode,
+                msg: messageResponse,
+                access_token: token
+            })
+        }
 
     } catch(error) {
         console.log('An error has been ocurred while login')
@@ -31,6 +31,11 @@ const login = async (req, res) => {
             msg: `An error has been ocurred: ${error}`
         });
     }
+
+    return res.status(statusCode).json({
+        code: 404,
+        msg: messageResponse
+    });
 }
 
 
